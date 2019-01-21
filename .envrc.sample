@@ -1,0 +1,2 @@
+export DATABASE_MONGODB_URI=mongodb://localhost:27017/schedule
+export DATABASE_MONGODB_DBNAME=schedule
