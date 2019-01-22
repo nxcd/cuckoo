@@ -1,4 +1,4 @@
-NXCD's Cuckoo
+Cuckoo
 ===
 
 Cuckoo is a microservice that schedules HTTP(S) requests.
