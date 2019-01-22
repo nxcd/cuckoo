@@ -6,6 +6,10 @@ import { SchedulingStatus } from '../domain/schedule/enums/SchedulingStatus'
 import { SchedulingRepository } from '../data/repositories/SchedulingRepository'
 import { SchedulingNotFoundError } from '../domain/schedule/errors/SchedulingNotFoundError'
 
+interface Object<TValue> {
+  [ key: string ]: TValue
+}
+
 export interface ISchedulingParams {
   timestamp: Date
   method: Method
@@ -73,6 +77,24 @@ export class SchedulingService {
     const scheduling = await this.repository.findById(id)
 
     if (!scheduling) throw new SchedulingNotFoundError(id)
+
+    return scheduling
+  }
+
+  async createFrom (originId: string, newTimestamp: Date, user: string, app: string) {
+    const originalScheduling = await this.find(originId)
+
+    const scheduling = Scheduling.create({
+      id: new ObjectId(),
+      headers: originalScheduling.headers as Object<string>,
+      method: originalScheduling.method as Method,
+      params: originalScheduling.params as Object<any>,
+      payload: originalScheduling.payload as Object<any>,
+      timestamp: newTimestamp,
+      url: originalScheduling.url as string
+    }, user, app)
+
+    await this.repository.save(scheduling)
 
     return scheduling
   }
