@@ -46,7 +46,7 @@ export function factory (service: SchedulingService): RequestHandler[] {
 
       const scheduling = await service.create({ timestamp: actualTimestamp, method, url, payload, params, headers }, user, app)
 
-      res.status(200)
+      res.status(201)
         .json(scheduling.state)
     })
   ]

@@ -93,7 +93,11 @@ export class Scheduling extends EventEntity<Scheduling> {
       url: currentState.url,
       payload: currentState.payload,
       params: currentState.params,
-      headers: currentState.headers
+      headers: currentState.headers,
+      status: currentState.status,
+      createdAt: currentState.createdAt,
+      createdBy: currentState.createdBy,
+      createdThrough: currentState.createdThrough
     }
   }
 
