@@ -4,9 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf ./dist",
+    "test": "npm run build && mocha test",
+    "lint": "tslint --project tsconfig.json",
     "build": "tsc",
+    "build:debug": "npm run clean && npm run build -- --sourceMap",
+    "build:clean": "npm run clean && npm run build",
+    "build:watch": "tsc -w",
+    "build:start": "npm run build:clean && npm start",
     "start": "node dist/index.js",
-    "start:debug": "tsc && concurrently 'npm run build -- -w' 'nodemon dist/index.js'"
+    "start:debug": "tsc && concurrently -s all \"tsc -w\" \"DEBUG=expresso:* nodemon dist/index.js\""
   },
   "keywords": [],
   "author": "",
