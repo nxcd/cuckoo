@@ -11,6 +11,8 @@ Cuckoo is a microservice that schedules HTTP(S) requests.
     - [Errors](#errors)
     - [Endpoints](#endpoints)
       - [POST /schedulings](#post-schedulings)
+        - [Create new](#create-new)
+        - [Copy from existing](#copy-from-existing)
       - [GET /schedulings/:scheduling-id](#get-schedulingsscheduling-id)
       - [DELETE /schedulings/:scheduling-id](#delete-schedulingsscheduling-id)
   - [More to come](#more-to-come)
@@ -54,6 +56,8 @@ Every error will be reported by this microservice following this schema:
 #### POST /schedulings
 ![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=flat-square)
 
+##### Create new
+
 Body:
 ```json
 {
@@ -96,6 +100,34 @@ Response:
 ```
 
 > `payload`, `headers` and `params` are not required and should be ommited if not used
+
+##### Copy from existing
+
+Body:
+```json
+{
+  "originId": "5c473258439c897ca1a40ff7",
+  "timestamp": "2019-01-22T16:20:00-02:00"
+}
+```
+
+Response:
+```json
+{
+  "id": "5c475fbcabe9bfa2043d5879",
+  "timestamp": "2019-01-22T18:20:00.000Z",
+  "method": "post",
+  "url": "http://192.168.0.11:3000/boxes",
+  "payload": {
+    "name": "Rogerinho"
+  },
+  "params": null,
+  "headers": null,
+  "status": "scheduled",
+  "createdAt": "2019-01-22T18:23:56.492Z",
+  "response": null
+}
+```
 
 #### GET /schedulings/:scheduling-id
 ![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=flat-square)
