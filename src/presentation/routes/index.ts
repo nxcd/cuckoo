@@ -7,6 +7,7 @@ export interface IAppRoutes {
 
 export const routes: IAppRoutes = {
   schedule: {
-    create: require('./schedule/create')
+    create: require('./schedule/create'),
+    delete: require('./schedule/delete')
   }
 }

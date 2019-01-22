@@ -57,4 +57,14 @@ export class SchedulingService {
 
     return scheduling
   }
+
+  async cancel (schedulingId: string) {
+    const scheduling = await this.repository.findById(schedulingId)
+
+    if (!scheduling || [ SchedulingStatus.CANCELED, SchedulingStatus.EXECUTED ].includes(scheduling.status)) return
+
+    scheduling.setStatus(SchedulingStatus.CANCELED)
+
+    await this.repository.save(scheduling)
+  }
 }
