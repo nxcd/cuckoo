@@ -97,7 +97,8 @@ export class Scheduling extends EventEntity<Scheduling> {
       status: currentState.status,
       createdAt: currentState.createdAt,
       createdBy: currentState.createdBy,
-      createdThrough: currentState.createdThrough
+      createdThrough: currentState.createdThrough,
+      response: currentState.response
     }
   }
 

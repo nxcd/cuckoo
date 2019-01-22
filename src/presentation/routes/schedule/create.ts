@@ -42,7 +42,7 @@ export function factory (service: SchedulingService): RequestHandler[] {
       const user = req.onBehalfOf
       const app = req.headers['x-app-id'] as string
 
-      const actualTimestamp = moment(timestamp).utc().toDate()
+      const actualTimestamp = moment(timestamp).toDate()
 
       const scheduling = await service.create({ timestamp: actualTimestamp, method, url, payload, params, headers }, user, app)
 

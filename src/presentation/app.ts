@@ -15,5 +15,6 @@ export const app = expresso(async (app: Express, config: IAppConfig) => {
   await schedulingService.setup()
 
   app.post('/schedulings', routes.schedule.create.factory(schedulingService))
+  app.get('/schedulings/:scheduling', routes.schedule.find.factory(schedulingService))
   app.delete('/schedulings/:scheduling', routes.schedule.delete.factory(schedulingService))
 })

@@ -4,6 +4,7 @@ import { Method } from '../domain/schedule/enums/Method'
 import { Scheduling } from '../domain/schedule/Scheduling'
 import { SchedulingStatus } from '../domain/schedule/enums/SchedulingStatus'
 import { SchedulingRepository } from '../data/repositories/SchedulingRepository'
+import { SchedulingNotFoundError } from '../domain/schedule/errors/SchedulingNotFoundError'
 
 export interface ISchedulingParams {
   timestamp: Date
@@ -66,5 +67,13 @@ export class SchedulingService {
     scheduling.setStatus(SchedulingStatus.CANCELED)
 
     await this.repository.save(scheduling)
+  }
+
+  async find (id: string) {
+    const scheduling = await this.repository.findById(id)
+
+    if (!scheduling) throw new SchedulingNotFoundError(id)
+
+    return scheduling
   }
 }
