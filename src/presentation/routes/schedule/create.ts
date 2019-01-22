@@ -65,7 +65,7 @@ export function factory (service: SchedulingService): RequestHandler[] {
 
       const actualTimestamp = moment(timestamp).toDate()
 
-      const scheduling = req.body.copyFromId
+      const scheduling = req.body.originId
         ? await service.createFrom(req.body.originId, actualTimestamp, user, app)
         : await service.create({ timestamp: actualTimestamp, method, url, payload, params, headers }, user, app)
 

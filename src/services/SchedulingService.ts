@@ -96,6 +96,10 @@ export class SchedulingService {
 
     await this.repository.save(scheduling)
 
+    setTimeout(async (schedulingId: ObjectId) => {
+      executeScheduling(schedulingId, this.repository)
+    }, scheduling.getDifference(), scheduling.id)
+
     return scheduling
   }
 }
