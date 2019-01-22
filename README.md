@@ -3,7 +3,7 @@ Cuckoo
 
 Cuckoo is a microservice that schedules HTTP(S) requests.
 
-- [Cuckoo](#nxcds-cuckoo)
+- [Cuckoo](#cuckoo)
   - [Usage](#usage)
     - [POST /schedulings](#post-schedulings)
   - [More to come](#more-to-come)
