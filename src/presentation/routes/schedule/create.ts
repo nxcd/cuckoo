@@ -11,31 +11,52 @@ interface IAuthenticatedRequest extends Request {
 export function factory (service: SchedulingService): RequestHandler[] {
   return [
     validate({
-      type: 'object',
-      properties: {
-        timestamp: {
-          type: 'string',
-          format: 'date-time'
+      definitions: {
+        scheduling: {
+          type: 'object',
+          properties: {
+            timestamp: {
+              type: 'string',
+              format: 'date-time'
+            },
+            method: {
+              type: 'string',
+              enum: ['put', 'post', 'patch', 'delete']
+            },
+            url: {
+              type: 'string',
+              format: 'uri'
+            },
+            payload: {
+              type: 'object'
+            },
+            params: {
+              type: 'object'
+            },
+            headers: {
+              type: 'object'
+            }
+          },
+          required: ['timestamp', 'method', 'url']
         },
-        method: {
-          type: 'string',
-          enum: ['put', 'post', 'patch', 'delete']
-        },
-        url: {
-          type: 'string',
-          format: 'uri'
-        },
-        payload: {
-          type: 'object'
-        },
-        params: {
-          type: 'object'
-        },
-        headers: {
-          type: 'object'
+        copyFromId: {
+          type: 'object',
+          properties: {
+            originId: {
+              type: 'string'
+            },
+            timestamp: {
+              type: 'string',
+              format: 'date-time'
+            }
+          },
+          required: ['originId']
         }
       },
-      required: ['timestamp', 'method', 'url']
+      anyOf: [
+        { $ref: '#/definitions/scheduling' },
+        { $ref: '#/definitions/copyFromId' }
+      ]
     }),
     rescue(async (req: IAuthenticatedRequest, res: Response) => {
       const { timestamp, method, url, payload = null, params = null, headers = null } = req.body
@@ -44,7 +65,9 @@ export function factory (service: SchedulingService): RequestHandler[] {
 
       const actualTimestamp = moment(timestamp).toDate()
 
-      const scheduling = await service.create({ timestamp: actualTimestamp, method, url, payload, params, headers }, user, app)
+      const scheduling = req.body.originId
+        ? await service.createFrom(req.body.originId, actualTimestamp, user, app)
+        : await service.create({ timestamp: actualTimestamp, method, url, payload, params, headers }, user, app)
 
       res.status(201)
         .json(scheduling.state)
