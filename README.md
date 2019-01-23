@@ -35,7 +35,7 @@ Then set an `.envrc` file with your variables following the `.envrc.sample` file
 ### Headers
 Every request of this microservice accepts the following headers:
 
-- `x-on-beahlf-of`: Id of the user who created the scheduling
+- `x-on-behalf-of`: Id of the user who created the scheduling
 - `x-app-id`: Id of the client app that was used to create the scheduling
 
 ### Errors
