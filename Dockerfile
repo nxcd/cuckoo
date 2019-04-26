@@ -6,9 +6,9 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 ## Install dependencies
-COPY ["./package.json", "./shrinkwrap.yaml", "/usr/src/app/"]
+COPY ["./package.json", "./package-lock.json", "/usr/src/app/"]
 
-RUN npx pnpm install
+RUN npm i
 
 ## Add source code
 COPY ["./src", "./tsconfig.json", "/usr/src/app/"]
