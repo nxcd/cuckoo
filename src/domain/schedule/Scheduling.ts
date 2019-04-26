@@ -9,7 +9,6 @@ import { SchedulingStatus } from './enums/SchedulingStatus'
  * Events
  * =======
  */
-import { TimeoutWasSetEvent } from './events/timeout-was-set'
 import { ResponseWasSetEvent } from './events/response-was-set'
 import { SchedulingStatusChangedEvent } from './events/scheduling-status-changed'
 import { ISchedulingCreationParams, SchedulingWasCreatedEvent } from './events/scheduling-was-created'
@@ -22,9 +21,9 @@ export class Scheduling extends EventEntity<Scheduling> {
   public timestamp: Date | null = null
   public method: Method | null = null
   public url: string | null = null
-  public params: { [ key: string ]: any } | null = null
-  public payload: { [ key: string ]: any } | null = null
-  public headers: { [ key: string ]: string } | null = null
+  public params: { [key: string]: any } | null = null
+  public payload: { [key: string]: any } | null = null
+  public headers: { [key: string]: string } | null = null
 
   /** Metadata */
   public createdAt: Date | null = null
@@ -35,7 +34,6 @@ export class Scheduling extends EventEntity<Scheduling> {
 
   constructor () {
     super({
-      [TimeoutWasSetEvent.eventName]: TimeoutWasSetEvent.commit,
       [ResponseWasSetEvent.eventName]: ResponseWasSetEvent.commit,
       [SchedulingWasCreatedEvent.eventName]: SchedulingWasCreatedEvent.commit,
       [SchedulingStatusChangedEvent.eventName]: SchedulingStatusChangedEvent.commit
@@ -55,14 +53,6 @@ export class Scheduling extends EventEntity<Scheduling> {
   setStatus (newStatus: SchedulingStatus) {
     this.pushNewEvents([
       new SchedulingStatusChangedEvent({ newStatus })
-    ])
-
-    return this
-  }
-
-  setTimeoutId (timeoutId: number) {
-    this.pushNewEvents([
-      new TimeoutWasSetEvent({ timeoutId })
     ])
 
     return this
@@ -105,10 +95,10 @@ export class Scheduling extends EventEntity<Scheduling> {
   getRequestConfig () {
     return {
       url: this.url as string,
-      data: this.payload as { [ key: string ]: string },
-      params: this.params as { [ ket: string ]: any },
+      data: this.payload as { [key: string]: string },
+      params: this.params as { [ket: string]: any },
       method: this.method as Method,
-      headers: this.headers as { [ key: string ]: string }
+      headers: this.headers as { [key: string]: string }
     }
   }
 }
