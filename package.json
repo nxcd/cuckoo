@@ -23,7 +23,7 @@
     "@types/express": "^4.16.0",
     "@types/mongodb": "^3.1.19",
     "@types/node": "^10.12.18",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.9",
     "sugar-env": "^1.5.3",
